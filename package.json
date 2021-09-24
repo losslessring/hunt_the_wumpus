@@ -6,15 +6,20 @@
   "scripts": {
     "start": "webpack serve",
     "dev": "webpack serve",
-    "build": "webpack --mode production"
+    "build": "webpack --mode production",
+    "test": "jest",
+    "watch": "jest --watch *.ts"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/jest": "^27.0.2",
     "html-webpack-plugin": "^5.3.2",
+    "jest": "^27.2.1",
+    "ts-jest": "^27.0.5",
     "ts-loader": "^9.2.5",
-    "typescript": "^4.3.5",
+    "typescript": "^4.4.3",
     "webpack": "^5.48.0",
     "webpack-cli": "^4.7.2",
     "webpack-dev-server": "^3.11.2"
