@@ -9,8 +9,14 @@ export type Room = {
     effect: any
 }
 
+export interface Encounter {
+    position: number,
+    type: string
+}
+
 export type Wampus = {
     position: number,
     sleep: boolean,
     sleepProbalility: number
 }
+
