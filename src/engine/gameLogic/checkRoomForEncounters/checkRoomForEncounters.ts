@@ -1,6 +1,8 @@
 import { Encounter } from '../../types/types'
 
-const checkRoomForEncounters = (enemies: Encounter[]) => (heroPosition: number) => {
+let checkRoomForEncounters: (enemies: Encounter[]) => (heroPosition: number) => string[]
+
+checkRoomForEncounters = (enemies: Encounter[]) => (heroPosition: number): string[] => {
     return enemies.filter(enemy => enemy.position === heroPosition).map(enemy => enemy.type)
 
 }
