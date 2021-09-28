@@ -17,6 +17,7 @@ const Engine: React.FC = () => {
     const [heroPosition, setHeroPosition] = useState(() => 0)
     const [wumpusPosition, setWumpusPosition] = useState(() => ({position: generateRandomInRange(0)(19), type: "Wumpus"}))
     
+    // const [presence, setPresence] = useState(() => )
     return (
             <>
                 <div style={passagesStyle}>

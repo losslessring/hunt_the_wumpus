@@ -1,7 +1,5 @@
 
-export type Map = {
-    rooms: number[][]
-}
+export type Map = number[][]
 
 export type Room = {
     neighbourRooms: number[],
@@ -14,7 +12,7 @@ export interface Encounter {
     type: string
 }
 
-export type Wampus = {
+export type Wumpus = {
     position: number,
     sleep: boolean,
     sleepProbalility: number
