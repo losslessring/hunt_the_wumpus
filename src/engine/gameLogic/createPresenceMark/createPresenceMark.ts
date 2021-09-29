@@ -7,7 +7,7 @@ const createPresenceMark = (enemy: Encounter)  => (marksTable: object) => (map: 
 
     const presenceMark = marksTable.hasOwnProperty(enemy.type) ? (marksTable as any)[enemy.type] : undefined
     const roomsToMark = findRoomsNextToEnemy(enemy.position)(map)
-    return roomsToMark?.map((room: number) => ({ roomNumber: room, mark: presenceMark}))
+    return roomsToMark?.map((room: number) => ({ roomNumber: room, mark: presenceMark})).concat({ roomNumber: enemy.position, mark: presenceMark})
 }
 
 export default createPresenceMark

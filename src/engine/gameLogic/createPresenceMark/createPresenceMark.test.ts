@@ -17,6 +17,10 @@ it('Create presence mark', () => {
                             {
                                 roomNumber:     15,
                                 mark:          "Disgusting smell"
+                            },
+                            {
+                                roomNumber:     0,
+                                mark:          "Disgusting smell"
                             }
                         ])
 })
