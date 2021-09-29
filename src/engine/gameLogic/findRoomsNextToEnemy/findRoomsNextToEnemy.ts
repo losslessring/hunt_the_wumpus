@@ -1,8 +1,8 @@
 import { Encounter, Map } from '../../types/types'
-// import map  from '../../data/map/map'
 
-const findRoomsNextToEnemy = (enemy: Encounter) => (map: Map) => {
-    return map.find((element, index) => enemy.position === index)
+
+const findRoomsNextToEnemy = (enemyPosition: number) => (map: Map): number[] | undefined => {
+    return map.find((element, index) => enemyPosition === index)
 
 }
 
