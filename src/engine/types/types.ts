@@ -18,3 +18,7 @@ export type Wumpus = {
     sleepProbalility: number
 }
 
+export type PresenceMark = {
+    roomNumber: number,
+    mark: string
+}
