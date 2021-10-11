@@ -8,6 +8,8 @@ import checkRoomForEncounters from '../../engine/gameLogic/checkRoomForEncounter
 import generateRandomInRange from '../../engine/utils/generateRandomInRange/generateRandomInRange'
 import createPresenceMark from '../../engine/gameLogic/createPresenceMark/createPresenceMark'
 import getPresenceMark from '../../engine/gameLogic/getPresenseMark/getPresenceMark'
+import encounterToAction from '../../engine/gameLogic/encounterToAction/encounterToAction'
+import mapEncountersToActions from '../../engine/gameLogic/mapEncountersToActions/mapEncountersToActions'
 
 const passagesStyle = {
                         display: 'flex',
@@ -21,16 +23,18 @@ const Engine: React.FC = () => {
     const [heroPosition, setHeroPosition] = useState(() => 0)
     const [wumpusPosition, setWumpusPosition] = useState(() => ({position: generateRandomInRange(0)(19), type: "Wumpus"}))
     const [wumpusSmellInRooms, setWumpusSmellInRooms] = useState(() => createPresenceMark(wumpusPosition)(marksTable)(map))
-    // const [presence, setPresence] = useState(() => )
     
+    const encounters = checkRoomForEncounters([wumpusPosition])(heroPosition)
+
     return (
             <>
                 <div style={passagesStyle}>
                 {map[heroPosition].map(room => <Room goToRoom={setHeroPosition} number={room}/>)}
                 </div>
                 <div>You are at room {heroPosition}</div> 
-                <div>You see: {checkRoomForEncounters([wumpusPosition])(heroPosition)}</div>
+                <div>You see: {encounters}</div>
                 <div>You sense: {getPresenceMark(heroPosition)(wumpusSmellInRooms)}</div>
+                <div>What happens: {mapEncountersToActions(encounters)(encounterToAction)}</div>
                 <div>There are passages to rooms {map[heroPosition].map(room => `${room} `)}</div>
             </>
     )
