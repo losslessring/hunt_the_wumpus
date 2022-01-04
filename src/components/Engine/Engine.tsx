@@ -20,11 +20,22 @@ const passagesStyle = {
 
 const Engine: React.FC = () => {
     
+    const [gameOver, setGameOver] = useState(() => false)
     const [heroPosition, setHeroPosition] = useState(() => 0)
     const [wumpusPosition, setWumpusPosition] = useState(() => ({position: generateRandomInRange(0)(19), type: "Wumpus"}))
     const [wumpusSmellInRooms, setWumpusSmellInRooms] = useState(() => createPresenceMark(wumpusPosition)(marksTable)(map))
     
     const encounters = checkRoomForEncounters([wumpusPosition])(heroPosition)
+
+    const wumpusAction = (gameOver: Boolean) => (setStateCallback: Function) => {
+        (!gameOver) && setStateCallback(true)
+        return "Wumpus wakes up and catches you!"
+    }
+
+    const encounterToAction = (enemy: string) => {
+        return (enemy === "Wumpus") ? wumpusAction(gameOver)(setGameOver) : "Nothing happens"
+    
+    }
 
     return (
             <>
@@ -36,6 +47,7 @@ const Engine: React.FC = () => {
                 <div>You sense: {getPresenceMark(heroPosition)(wumpusSmellInRooms)}</div>
                 <div>What happens: {mapEncountersToActions(encounters)(encounterToAction)}</div>
                 <div>There are passages to rooms {map[heroPosition].map(room => `${room} `)}</div>
+                {gameOver && <h2>Game over!</h2>}
             </>
     )
 }
