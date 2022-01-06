@@ -22,18 +22,27 @@ const Engine: React.FC = () => {
     
     const [gameOver, setGameOver] = useState(() => false)
     const [heroPosition, setHeroPosition] = useState(() => 0)
-    const [wumpusPosition, setWumpusPosition] = useState(() => ({position: generateRandomInRange(0)(19), type: "Wumpus"}))
+    const [wumpusPosition, setWumpusPosition] = useState(() => ({position: generateRandomInRange(1)(1), type: "Wumpus"}))
     const [wumpusSmellInRooms, setWumpusSmellInRooms] = useState(() => createPresenceMark(wumpusPosition)(marksTable)(map))
+
+    const [pitPosition, setPitPosition] = useState(() => ({position: generateRandomInRange(1)(1), type: "Pit"}))
+    const [pitDraftInRooms, setPitDraftInRooms] = useState(() => createPresenceMark(pitPosition)(marksTable)(map))
     
-    const encounters = checkRoomForEncounters([wumpusPosition])(heroPosition)
+    const encounters = checkRoomForEncounters([pitPosition, wumpusPosition])(heroPosition)
 
     const wumpusAction = (gameOver: Boolean) => (setStateCallback: Function) => {
         (!gameOver) && setStateCallback(true)
         return "Wumpus wakes up and catches you!"
     }
+    
+    const pitAction = (gameOver: Boolean) => (setStateCallback: Function) => {
+        (!gameOver) && setStateCallback(true)
+        return "You fall into the pit!"
+    }
 
     const encounterToAction = (enemy: string) => {
-        return (enemy === "Wumpus") ? wumpusAction(gameOver)(setGameOver) : "Nothing happens"
+        return (enemy === "Pit") ? pitAction(gameOver)(setGameOver) :
+               (enemy === "Wumpus") ? wumpusAction(gameOver)(setGameOver) : "Nothing happens"
     
     }
 
@@ -44,7 +53,7 @@ const Engine: React.FC = () => {
                 </div>
                 <div>You are at room {heroPosition}</div> 
                 <div>You see: {encounters}</div>
-                <div>You sense: {getPresenceMark(heroPosition)(wumpusSmellInRooms)}</div>
+                <div>You sense: {getPresenceMark(heroPosition)([pitDraftInRooms, wumpusSmellInRooms])}</div>
                 <div>What happens: {mapEncountersToActions(encounters)(encounterToAction)}</div>
                 <div>There are passages to rooms {map[heroPosition].map(room => `${room} `)}</div>
                 {gameOver && <h2>Game over!</h2>}
