@@ -28,7 +28,10 @@ const Engine: React.FC = () => {
     const [pitPositions, setPitPosition] = useState(() => ([{position: generateRandomInRange(0)(19), type: "Pit"}, {position: generateRandomInRange(0)(19), type: "Pit"}]))
     const [pitDraftInRooms, setPitDraftInRooms] = useState(() => createPresenceMark(pitPositions)(marksTable)(map))
     
-    const encounters = checkRoomForEncounters([...pitPositions, wumpusPosition])(heroPosition)
+    const [batPositions, setBatPositions] = useState(() => ([{position: generateRandomInRange(0)(19), type: "Bat"}, {position: generateRandomInRange(0)(19), type: "Bat"}]))
+    const [batNoiseInRooms, setBatNoiseInRooms] = useState(() => createPresenceMark(batPositions)(marksTable)(map))
+
+    const encounters = checkRoomForEncounters([...pitPositions, ...batPositions, wumpusPosition])(heroPosition)
 
     const wumpusAction = (gameOver: Boolean) => (setStateCallback: Function) => {
         (!gameOver) && setStateCallback(true)
@@ -40,8 +43,15 @@ const Engine: React.FC = () => {
         return "You fall into the pit!"
     }
 
+    const batAction = (setStateCallback: Function) => {
+        // setTimeout(() => setStateCallback(generateRandomInRange(0)(19)), 5000)
+        setStateCallback(generateRandomInRange(0)(19))
+        return "Bat carry you over!"
+    }
+
     const encounterToAction = (enemy: string) => {
-        return (enemy === "Pit") ? pitAction(gameOver)(setGameOver) :
+        return (enemy === "Bat") ? batAction(setHeroPosition) :
+               (enemy === "Pit") ? pitAction(gameOver)(setGameOver) :
                (enemy === "Wumpus") ? wumpusAction(gameOver)(setGameOver) : "Nothing happens"
     
     }
@@ -53,7 +63,7 @@ const Engine: React.FC = () => {
                 </div>
                 <div>You are at room {heroPosition}</div> 
                 <div>You see: {encounters}</div>
-                <div>You sense: {getPresenceMark(heroPosition)([pitDraftInRooms, wumpusSmellInRooms])}</div>
+                <div>You sense: {getPresenceMark(heroPosition)([batNoiseInRooms, pitDraftInRooms, wumpusSmellInRooms])}</div>
                 <div>What happens: {mapEncountersToActions(encounters)(encounterToAction)}</div>
                 <div>There are passages to rooms {map[heroPosition].map(room => `${room} `)}</div>
                 {gameOver && <h2>Game over!</h2>}
