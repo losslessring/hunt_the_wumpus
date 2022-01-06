@@ -22,13 +22,13 @@ const Engine: React.FC = () => {
     
     const [gameOver, setGameOver] = useState(() => false)
     const [heroPosition, setHeroPosition] = useState(() => 0)
-    const [wumpusPosition, setWumpusPosition] = useState(() => ({position: generateRandomInRange(1)(1), type: "Wumpus"}))
-    const [wumpusSmellInRooms, setWumpusSmellInRooms] = useState(() => createPresenceMark(wumpusPosition)(marksTable)(map))
+    const [wumpusPosition, setWumpusPosition] = useState(() => ({position: generateRandomInRange(0)(19), type: "Wumpus"}))
+    const [wumpusSmellInRooms, setWumpusSmellInRooms] = useState(() => createPresenceMark([wumpusPosition])(marksTable)(map))
 
-    const [pitPosition, setPitPosition] = useState(() => ({position: generateRandomInRange(1)(1), type: "Pit"}))
-    const [pitDraftInRooms, setPitDraftInRooms] = useState(() => createPresenceMark(pitPosition)(marksTable)(map))
+    const [pitPositions, setPitPosition] = useState(() => ([{position: generateRandomInRange(0)(19), type: "Pit"}, {position: generateRandomInRange(0)(19), type: "Pit"}]))
+    const [pitDraftInRooms, setPitDraftInRooms] = useState(() => createPresenceMark(pitPositions)(marksTable)(map))
     
-    const encounters = checkRoomForEncounters([pitPosition, wumpusPosition])(heroPosition)
+    const encounters = checkRoomForEncounters([...pitPositions, wumpusPosition])(heroPosition)
 
     const wumpusAction = (gameOver: Boolean) => (setStateCallback: Function) => {
         (!gameOver) && setStateCallback(true)
