@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react"
 import Room from '../Room/Room'
+import ShotRange from '../Shot/ShotRange/ShotRange'
 
 import map from '../../engine/data/map/map'
 import marksTable from '../../engine/data/marksTable/marksTable'
@@ -30,6 +31,8 @@ const Engine: React.FC = () => {
     
     const [batPositions, setBatPositions] = useState(() => ([{position: generateRandomInRange(0)(19), type: "Bat"}, {position: generateRandomInRange(0)(19), type: "Bat"}]))
     const [batNoiseInRooms, setBatNoiseInRooms] = useState(() => createPresenceMark(batPositions)(marksTable)(map))
+
+    const [shot, setShot] = useState(() => false)
 
     const encounters = checkRoomForEncounters([...pitPositions, ...batPositions, wumpusPosition])(heroPosition)
 
@@ -66,6 +69,12 @@ const Engine: React.FC = () => {
                 <div>You sense: {getPresenceMark(heroPosition)([batNoiseInRooms, pitDraftInRooms, wumpusSmellInRooms])}</div>
                 <div>What happens: {mapEncountersToActions(encounters)(encounterToAction)}</div>
                 <div>There are passages to rooms {map[heroPosition].map(room => `${room} `)}</div>
+                <div>
+
+                    <button onClick={() => setShot(true)}>Shoot!</button>
+                    {shot && <ShotRange/>}
+                </div>
+                
                 {gameOver && <h2>Game over!</h2>}
             </>
     )
