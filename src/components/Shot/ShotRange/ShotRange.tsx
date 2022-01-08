@@ -18,15 +18,16 @@ const ShotRange = (props: any) => {
     } as React.CSSProperties
     
     const [shotRange, setShotRange] = useState<number>(() => 0)
-    const [shotRoute, setShotRoute] = useState<number[]>(() => [])
+    const [shotRoute, setShotRoute] = useState<(number | undefined)[]>(() => [])
     
-    const changeShotRange = (event: React.ChangeEvent<HTMLInputElement>) => 
-        Number(event.target.value) < shotRange ?  
-            (() => {
-                setShotRange(Number(event.target.value))
-                setShotRoute(shotRoute.slice(0, Number(event.target.value)))
-            })()
-            : setShotRange(Number(event.target.value))
+    // const changeShotRange = (event: React.ChangeEvent<HTMLInputElement>) => 
+        // Number(event.target.value) < shotRange ?  
+        //     (() => {
+        //         setShotRange(Number(event.target.value))
+        //         setShotRoute(shotRoute.slice(0, Number(event.target.value)))
+        //     })()
+        //     : setShotRange(Number(event.target.value))
+        
         // if (Number(event.target.value) < shotRange){
         //     setShotRange(Number(event.target.value))
         //     setShotRoute(shotRoute.slice(0, Number(event.target.value)))
@@ -34,7 +35,12 @@ const ShotRange = (props: any) => {
         //     setShotRange(Number(event.target.value))
         // }
     
-    // const changeShotRange = (event: React.ChangeEvent<HTMLInputElement>) => setShotRoute([...Array(Number(event.target.value))].map(() => undefined))
+    const changeShotRange = (event: React.ChangeEvent<HTMLInputElement>) => 
+        Number(event.target.value) < shotRoute.length ? setShotRoute(shotRoute.slice(0, Number(event.target.value))) :
+        //setShotRoute([...shotRoute, undefined])
+        setShotRoute(prevState => [...prevState, undefined])
+
+        // setShotRoute([...Array(Number(event.target.value))])
     
     const changeShotRoute = (event: React.ChangeEvent<HTMLInputElement>) => (index: number) => setShotRoute(prevState => Object.assign([], prevState, {[index]: Number(event.target.value)}))
 
@@ -57,8 +63,8 @@ const ShotRange = (props: any) => {
                         
             </div>
             <div>
-                {[...Array(shotRange)].map((roomNumber, index) => <div style={style}>
-                {/* {shotRoute.map((roomNumber, index) => <div style={style}> */}
+                {/* {[...Array(shotRange)].map((roomNumber, index) => <div style={style}> */}
+                {shotRoute.map((roomNumber, index) => <div style={style}>
                     <div>
                         Arrow route
                         <input 
