@@ -1,9 +1,9 @@
 
 import React, { useState, useEffect } from "react"
 
+import ShotRoute from './ShotRoute/ShotRoute'
 
-
-const ShotRange = (props: any) => {
+const ShotRange = ({shotRoute, setShotRoute, changeShotRange}: any) => {
 
     const style = {
         height: 30,
@@ -17,16 +17,16 @@ const ShotRange = (props: any) => {
         alignItems: 'center'
     } as React.CSSProperties
     
-    const [shotRoute, setShotRoute] = useState<(number | undefined)[]>(() => [])
+    // const [shotRoute, setShotRoute] = useState<(number | undefined)[]>(() => [])
     
     
-    const changeShotRange = (event: React.ChangeEvent<HTMLInputElement>) => 
-        Number(event.target.value) < shotRoute.length ? 
-            setShotRoute(shotRoute.slice(0, Number(event.target.value))) :
-            setShotRoute(prevState => [...prevState, undefined])
+    // const changeShotRange = (event: React.ChangeEvent<HTMLInputElement>) => 
+    //     Number(event.target.value) < shotRoute.length ? 
+    //         setShotRoute(shotRoute.slice(0, Number(event.target.value))) :
+    //         setShotRoute(prevState => [...prevState, undefined])
 
     
-    const changeShotRoute = (event: React.ChangeEvent<HTMLInputElement>) => (index: number) => setShotRoute(prevState => Object.assign([], prevState, {[index]: Number(event.target.value)}))
+    // const changeShotRoute = (event: React.ChangeEvent<HTMLInputElement>) => (index: number) => setShotRoute((prevState: any) => Object.assign([], prevState, {[index]: Number(event.target.value)}))
 
     console.log(shotRoute)
 
@@ -40,26 +40,10 @@ const ShotRange = (props: any) => {
                     name="shot_range" 
                     min="1" 
                     max="5"
-                    onChange={changeShotRange}/>
-                
-                
-                        
+                    onChange={changeShotRange}
+                />
             </div>
-            <div>
-                {shotRoute.map((roomNumber, index) => <div style={style}>
-                    <div>
-                        Arrow route
-                        <input 
-                        type="number" 
-                        id="shot_range" 
-                        name="shot_range" 
-                        min="0" 
-                        max="19"
-                        value={shotRoute[index]}
-                        onChange={(event) => changeShotRoute(event)(index)}/>
-                    </div>
-                </div>)}
-            </div>
+            <ShotRoute shotRoute={shotRoute} setShotRoute={setShotRoute}/>
         </div>
     )
 

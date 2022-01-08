@@ -34,6 +34,15 @@ const Engine: React.FC = () => {
 
     const [shot, setShot] = useState(() => false)
 
+    const [shotRoute, setShotRoute] = useState<(number | undefined)[]>(() => [])
+    
+    
+    const changeShotRange = (event: React.ChangeEvent<HTMLInputElement>) => 
+        Number(event.target.value) < shotRoute.length ? 
+            setShotRoute(shotRoute.slice(0, Number(event.target.value))) :
+            setShotRoute(prevState => [...prevState, undefined])
+
+
     const encounters = checkRoomForEncounters([...pitPositions, ...batPositions, wumpusPosition])(heroPosition)
 
     const wumpusAction = (gameOver: Boolean) => (setStateCallback: Function) => {
@@ -72,7 +81,8 @@ const Engine: React.FC = () => {
                 <div>
 
                     <button onClick={() => setShot(true)}>Shoot!</button>
-                    {shot && <ShotRange/>}
+                    {shot && <ShotRange shotRoute={shotRoute} setShotRoute={setShotRoute} changeShotRange = {changeShotRange}/>}
+                    {/* {shot && <ShotRange />} */}
                 </div>
                 
                 {gameOver && <h2>Game over!</h2>}
