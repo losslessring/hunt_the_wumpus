@@ -17,30 +17,14 @@ const ShotRange = (props: any) => {
         alignItems: 'center'
     } as React.CSSProperties
     
-    const [shotRange, setShotRange] = useState<number>(() => 0)
     const [shotRoute, setShotRoute] = useState<(number | undefined)[]>(() => [])
     
-    // const changeShotRange = (event: React.ChangeEvent<HTMLInputElement>) => 
-        // Number(event.target.value) < shotRange ?  
-        //     (() => {
-        //         setShotRange(Number(event.target.value))
-        //         setShotRoute(shotRoute.slice(0, Number(event.target.value)))
-        //     })()
-        //     : setShotRange(Number(event.target.value))
-        
-        // if (Number(event.target.value) < shotRange){
-        //     setShotRange(Number(event.target.value))
-        //     setShotRoute(shotRoute.slice(0, Number(event.target.value)))
-        // } else {
-        //     setShotRange(Number(event.target.value))
-        // }
     
     const changeShotRange = (event: React.ChangeEvent<HTMLInputElement>) => 
-        Number(event.target.value) < shotRoute.length ? setShotRoute(shotRoute.slice(0, Number(event.target.value))) :
-        //setShotRoute([...shotRoute, undefined])
-        setShotRoute(prevState => [...prevState, undefined])
+        Number(event.target.value) < shotRoute.length ? 
+            setShotRoute(shotRoute.slice(0, Number(event.target.value))) :
+            setShotRoute(prevState => [...prevState, undefined])
 
-        // setShotRoute([...Array(Number(event.target.value))])
     
     const changeShotRoute = (event: React.ChangeEvent<HTMLInputElement>) => (index: number) => setShotRoute(prevState => Object.assign([], prevState, {[index]: Number(event.target.value)}))
 
@@ -59,11 +43,9 @@ const ShotRange = (props: any) => {
                     onChange={changeShotRange}/>
                 
                 
-                {/* <button onClick={() => setShotRoute(true)}>Ok</button> */}
                         
             </div>
             <div>
-                {/* {[...Array(shotRange)].map((roomNumber, index) => <div style={style}> */}
                 {shotRoute.map((roomNumber, index) => <div style={style}>
                     <div>
                         Arrow route
