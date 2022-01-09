@@ -71,7 +71,7 @@ const Engine: React.FC = () => {
     return (
             <>
                 <div style={passagesStyle}>
-                {map[heroPosition].map(room => <Room goToRoom={setHeroPosition} number={room}/>)}
+                    {map[heroPosition].map(room => <Room key={room} goToRoom={setHeroPosition} number={room}/>)}
                 </div>
                 <div>You are at room {heroPosition}</div> 
                 <div>You see: {encounters}</div>
