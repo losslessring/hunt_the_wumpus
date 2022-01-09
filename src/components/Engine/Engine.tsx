@@ -36,6 +36,11 @@ const Engine: React.FC = () => {
 
     const [shotRoute, setShotRoute] = useState<(number | undefined)[]>(() => [])
     
+    const shotAction = (heroPosition: number) => (wumpusPosition: number) => (shotRoute: number[]) => (map: number[][]) => {
+        shotRoute.forEach((arrowPosition, index) => {
+            index === 0 ? map[heroPosition] : map[arrowPosition]
+        })
+    }
     
     const changeShotRange = (event: React.ChangeEvent<HTMLInputElement>) => 
         Number(event.target.value) < shotRoute.length ? 
