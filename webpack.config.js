@@ -19,6 +19,7 @@ module.exports = {
   // will be compiled with ts-loader,
   // a spcific loader for webpack
   // that knows how to work with TypeScript files.
+  mode: "development",
   module: {
     rules: [
       {

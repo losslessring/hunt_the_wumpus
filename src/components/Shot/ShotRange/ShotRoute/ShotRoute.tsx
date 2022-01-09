@@ -47,6 +47,7 @@ const ShotRoute = ({shotRoute, setShotRoute}: any) => {
                             onChange={(event) => changeShotRoute(event)(index)}/>
                         </div>
                     </div>)}
+                    {/* <button onClick={() => true}>Shoot!</button> */}
             </div>
         </div>
     )
