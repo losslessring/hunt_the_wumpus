@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react"
 
 import ShotRoute from './ShotRoute/ShotRoute'
 
-const ShotRange = ({shotRoute, setShotRoute, changeShotRange}: any) => {
+const ShotRange = ({shotRoute, setShotRoute, changeShotRange, setShotFired}: any) => {
 
     const style = {
         height: 30,
@@ -43,7 +43,7 @@ const ShotRange = ({shotRoute, setShotRoute, changeShotRange}: any) => {
                     onChange={changeShotRange}
                 />
             </div>
-            <ShotRoute shotRoute={shotRoute} setShotRoute={setShotRoute}/>
+            <ShotRoute shotRoute={shotRoute} setShotRoute={setShotRoute} setShotFired={setShotFired}/>
         </div>
     )
 

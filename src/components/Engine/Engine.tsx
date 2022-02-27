@@ -11,6 +11,7 @@ import createPresenceMark from '../../engine/gameLogic/createPresenceMark/create
 import getPresenceMark from '../../engine/gameLogic/getPresenseMark/getPresenceMark'
 import encounterToAction from '../../engine/gameLogic/encounterToAction/encounterToAction'
 import mapEncountersToActions from '../../engine/gameLogic/mapEncountersToActions/mapEncountersToActions'
+import checkShotHit from '../../engine/gameLogic/checkShotHit/checkShotHit'
 
 const passagesStyle = {
                         display: 'flex',
@@ -22,6 +23,7 @@ const passagesStyle = {
 const Engine: React.FC = () => {
     
     const [gameOver, setGameOver] = useState(() => false)
+    const [wumpusHit, setWumpusHit] = useState(() => false)
     const [heroPosition, setHeroPosition] = useState(() => 0)
     const [wumpusPosition, setWumpusPosition] = useState(() => ({position: generateRandomInRange(0)(19), type: "Wumpus"}))
     const [wumpusSmellInRooms, setWumpusSmellInRooms] = useState(() => createPresenceMark([wumpusPosition])(marksTable)(map))
@@ -35,6 +37,7 @@ const Engine: React.FC = () => {
     const [shot, setShot] = useState(() => false)
 
     const [shotRoute, setShotRoute] = useState<(number | undefined)[]>(() => [])
+    const [shotFired, setShotFired] = useState(() => false)
     
     const shotAction = (heroPosition: number) => (wumpusPosition: number) => (shotRoute: number[]) => (map: number[][]) => {
         shotRoute.forEach((arrowPosition, index) => {
@@ -86,11 +89,20 @@ const Engine: React.FC = () => {
                 <div>
 
                     <button onClick={() => setShot(true)}>Shoot!</button>
-                    {shot && <ShotRange shotRoute={shotRoute} setShotRoute={setShotRoute} changeShotRange = {changeShotRange}/>}
-                    {/* {shot && <ShotRange />} */}
+                    {shot && <ShotRange shotRoute={shotRoute} setShotRoute={setShotRoute} changeShotRange = {changeShotRange} setShotFired={setShotFired}/>}
+                    {shotFired && 
+                        <div>
+                            <h2>Shot fired!</h2>
+                            {setWumpusHit(checkShotHit(wumpusPosition.position)(shotRoute))}
+                            {setShotFired(false)}
+                            {setShot(false)}
+                            
+                        </div>
+                    }
                 </div>
                 
                 {gameOver && <h2>Game over!</h2>}
+                {wumpusHit && <h2>Wumpus hit!You win!</h2>}
             </>
     )
 }

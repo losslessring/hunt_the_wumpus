@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react"
 
 
 
-const ShotRoute = ({shotRoute, setShotRoute}: any) => {
+const ShotRoute = ({shotRoute, setShotRoute, setShotFired}: any) => {
 
     const style = {
         height: 30,
@@ -47,7 +47,7 @@ const ShotRoute = ({shotRoute, setShotRoute}: any) => {
                             onChange={(event) => changeShotRoute(event)(index)}/>
                         </div>
                     </div>)}
-                    <button onClick={() => true}>Shoot!</button>
+                    <button onClick={() => setShotFired(true)}>Fire!</button>
             </div>
         </div>
     )

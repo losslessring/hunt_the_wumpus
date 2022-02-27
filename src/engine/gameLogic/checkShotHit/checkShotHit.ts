@@ -1,4 +1,4 @@
-const checkShotHit = (targetPosition: number) => (arrowRoute: number[]):Boolean => {
+const checkShotHit = (targetPosition: number) => (arrowRoute: (number | undefined)[]):boolean => {
     return arrowRoute.includes(targetPosition)    
 }
 
