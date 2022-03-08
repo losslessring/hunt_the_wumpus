@@ -28,7 +28,7 @@ const ShotRange = ({shotRoute, setShotRoute, changeShotRange, setShotFired}: any
     
     // const changeShotRoute = (event: React.ChangeEvent<HTMLInputElement>) => (index: number) => setShotRoute((prevState: any) => Object.assign([], prevState, {[index]: Number(event.target.value)}))
 
-    console.log(shotRoute)
+    // console.log(shotRoute)
 
     return (
         <div>

@@ -34,7 +34,9 @@ const ShotRoute = ({shotRoute, setShotRoute, setShotFired}: any) => {
         <div>
             <div>
                 {shotRoute.map((roomNumber: number, index: number) => 
-                    <div style={style}>
+                    <div style={style}
+                         key={index}   
+                    >
                         <div>
                             Arrow route
                             <input 

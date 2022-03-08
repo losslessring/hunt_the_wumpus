@@ -38,6 +38,15 @@ const Engine: React.FC = () => {
 
     const [shotRoute, setShotRoute] = useState<(number | undefined)[]>(() => [])
     const [shotFired, setShotFired] = useState(() => false)
+
+    const [arrowsCount, setArrowsCount] = useState(5)
+
+    useEffect(() => {
+        console.log('Arrows: ', arrowsCount)
+        if (arrowsCount === 0) {
+            setGameOver(true)
+        } 
+     }, [arrowsCount])
     
     const shotAction = (heroPosition: number) => (wumpusPosition: number) => (shotRoute: number[]) => (map: number[][]) => {
         shotRoute.forEach((arrowPosition, index) => {
@@ -79,13 +88,15 @@ const Engine: React.FC = () => {
     return (
             <>
                 <div style={passagesStyle}>
-                {map[heroPosition].map(room => <Room goToRoom={setHeroPosition} number={room}/>)}
+                {map[heroPosition].map((room, index) => <Room goToRoom={setHeroPosition} number={room} key={index}/>)}
                 </div>
                 <div>You are at room {heroPosition}</div> 
                 <div>You see: {encounters}</div>
                 <div>You sense: {getPresenceMark(heroPosition)([batNoiseInRooms, pitDraftInRooms, wumpusSmellInRooms])}</div>
                 <div>What happens: {mapEncountersToActions(encounters)(encounterToAction)}</div>
                 <div>There are passages to rooms {map[heroPosition].map(room => `${room} `)}</div>
+                <div>Arrows: {arrowsCount}</div>
+                <div>Wumpus at: {wumpusPosition.position}</div>
                 <div>
 
                     <button onClick={() => setShot(true)}>Shoot!</button>
@@ -93,10 +104,12 @@ const Engine: React.FC = () => {
                     {shotFired && 
                         <div>
                             <h2>Shot fired!</h2>
+                            {/* Вынести перезарядку в отдельную функцию, очищать маршрут стрелы */}
                             {setWumpusHit(checkShotHit(wumpusPosition.position)(shotRoute))}
                             {setShotFired(false)}
                             {setShot(false)}
-                            
+                            {setShotRoute([])}
+                            {setArrowsCount(arrowsCount - 1)}
                         </div>
                     }
                 </div>
