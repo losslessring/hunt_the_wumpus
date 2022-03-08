@@ -12,6 +12,7 @@ import getPresenceMark from '../../engine/gameLogic/getPresenseMark/getPresenceM
 import encounterToAction from '../../engine/gameLogic/encounterToAction/encounterToAction'
 import mapEncountersToActions from '../../engine/gameLogic/mapEncountersToActions/mapEncountersToActions'
 import checkShotHit from '../../engine/gameLogic/checkShotHit/checkShotHit'
+import getRoomsInRoute from '../../engine/gameLogic/getRoomsInRoute/getRoomsInRoute'
 
 const passagesStyle = {
                         display: 'flex',
@@ -85,6 +86,7 @@ const Engine: React.FC = () => {
     
     }
 
+
     return (
             <>
                 <div style={passagesStyle}>
@@ -104,7 +106,10 @@ const Engine: React.FC = () => {
                     {shotFired && 
                         <div>
                             <h2>Shot fired!</h2>
-                            {/* Вынести перезарядку в отдельную функцию, очищать маршрут стрелы */}
+                            {/* Вынести перезарядку в отдельную функцию, сделать проверку комнат этим методом
+                            https://bryanjenningz.wordpress.com/2015/04/03/how-to-break-out-of-reduce-in-javascript/
+                            */}
+                            {getRoomsInRoute(shotRoute)(map)}
                             {setWumpusHit(checkShotHit(wumpusPosition.position)(shotRoute))}
                             {setShotFired(false)}
                             {setShot(false)}
