@@ -91,9 +91,12 @@ const Engine: React.FC = () => {
 
 
     const checkArrowRoute = () => {
-        const roomsInArrowRoute = getRoomsInRoute(shotRoute)(map)
+        const fullShotRoute = [heroPosition, ...shotRoute]
+        console.log("Full shot route: ", fullShotRoute)
+        const roomsInArrowRoute = getRoomsInRoute(fullShotRoute)(map)
         //const roomsRouteCorrectness = recursiveArrayNeighboursCheck(checkArraysIntersection)([])(roomsInArrowRoute)
         //console.log(roomsRouteCorrectness)
+        //console.log(roomsInArrowRoute)
     }
 
 
