@@ -2,7 +2,7 @@ import recursiveArrayNeighboursCheck from './recursiveArrayNeighboursCheck'
 
 const arr = [0,1,4,2,3,5]
   
-const checkFunction = (a: number, b: number) => a > b
+const checkFunction = (a: number, b: number): boolean => a > b
 
 const result = [false, false, true, false, false]
   
@@ -19,7 +19,7 @@ const arrayOfNextRooms = [
     [19, 17, 1]
 ]
 
-const checkRoomsConnection = (array1: number[], array2: number[]) => {
+const checkRoomsConnection = (array1: number[], array2: number[]): boolean => {
     return Boolean(array1.find(value => array2.includes(value)))
 }
 
