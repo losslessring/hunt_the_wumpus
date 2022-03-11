@@ -11,7 +11,7 @@ it("Recursive array neighbours check", () => {
     expect(recursiveArrayNeighboursCheck(checkFunction)([])(arr)).toStrictEqual(result)
 })
 
-const arrayOfNextRooms = [
+const array2 = [
     [5, 3, 9],
     [19, 9, 14],
     [1, 10, 6],
@@ -19,13 +19,13 @@ const arrayOfNextRooms = [
     [19, 17, 1]
 ]
 
-const checkRoomsConnection = (array1: number[], array2: number[]): boolean => {
+const checkArraysIntersection = (array1: number[], array2: number[]): boolean => {
     return Boolean(array1.find(value => array2.includes(value)))
 }
 
-const roomsConnectionRouteResult = [true, false, true, false]
+const result2 = [true, false, true, false]
 
 
 it("Recursive array neighbours check if next array includes elements from previous array", () => {
-    expect(recursiveArrayNeighboursCheck(checkRoomsConnection)([])(arrayOfNextRooms)).toStrictEqual(roomsConnectionRouteResult)
+    expect(recursiveArrayNeighboursCheck(checkArraysIntersection)([])(array2)).toStrictEqual(result2)
 })

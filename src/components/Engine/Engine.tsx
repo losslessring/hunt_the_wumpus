@@ -12,6 +12,9 @@ import getPresenceMark from '../../engine/gameLogic/getPresenseMark/getPresenceM
 import encounterToAction from '../../engine/gameLogic/encounterToAction/encounterToAction'
 import mapEncountersToActions from '../../engine/gameLogic/mapEncountersToActions/mapEncountersToActions'
 import checkShotHit from '../../engine/gameLogic/checkShotHit/checkShotHit'
+
+import checkArraysIntersection from '../../engine/gameLogic/checkArraysIntersection/checkArraysIntersection'
+import recursiveArrayNeighboursCheck from '../../engine/gameLogic/recursiveArrayNeighboursCheck/recursiveArrayNeighboursCheck'
 import getRoomsInRoute from '../../engine/gameLogic/getRoomsInRoute/getRoomsInRoute'
 
 const passagesStyle = {
@@ -87,6 +90,13 @@ const Engine: React.FC = () => {
     }
 
 
+    const checkArrowRoute = () => {
+        const roomsInArrowRoute = getRoomsInRoute(shotRoute)(map)
+        //const roomsRouteCorrectness = recursiveArrayNeighboursCheck(checkArraysIntersection)([])(roomsInArrowRoute)
+        //console.log(roomsRouteCorrectness)
+    }
+
+
     return (
             <>
                 <div style={passagesStyle}>
@@ -107,9 +117,9 @@ const Engine: React.FC = () => {
                         <div>
                             <h2>Shot fired!</h2>
                             {/* Вынести перезарядку в отдельную функцию, сделать проверку комнат этим методом
-                            https://bryanjenningz.wordpress.com/2015/04/03/how-to-break-out-of-reduce-in-javascript/
+                            Сравнивать маршрут стрелы и комнат, а не соседние комнаты. Дописать начальное положение выстрела из позиции героя
                             */}
-                            {getRoomsInRoute(shotRoute)(map)}
+                            {checkArrowRoute()}
                             {setWumpusHit(checkShotHit(wumpusPosition.position)(shotRoute))}
                             {setShotFired(false)}
                             {setShot(false)}
